@@ -49,7 +49,7 @@ $navDockerImage.Split(',') | % {
         docker login "$registry" -u "$registryUsername" -p "$registryPassword"
     }
     Log "Pulling $_ (this might take ~30 minutes)"
- #   docker pull "$_"
+    docker pull "$_"
 }
 
 Log "Installing Visual C++ Redist"
@@ -70,9 +70,20 @@ $openXmlFile = "C:\DOWNLOAD\OpenXMLSDKV25.msi"
 Download-File -sourceUrl $openXmlUrl -destinationFile $openXmlFile
 Start-Process $openXmlFile -argumentList "/qn /q /passive" -wait
 
-#. "c:\demo\SetupNavContainer.ps1"
+. "c:\demo\SetupNavContainer.ps1"
 . "c:\demo\SetupDesktop.ps1"
 . "c:\demo\SetupWorkshop.ps1"
+
+$downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
+$logonAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $downloadWorkshopFilesScript
+$logonTrigger = New-ScheduledTaskTrigger -AtLogOn
+Register-ScheduledTask -TaskName "RenewWorkshopAtLogon" `
+                        -Action $logonAction `
+                        -Trigger $logonTrigger `
+                        -RunLevel Highest `
+                        -User $vmAdminUsername | Out-Null
+
+
 
 $finalSetupScript = (Join-Path $PSScriptRoot "FinalSetupScript.ps1")
 if (Test-Path $finalSetupScript) {

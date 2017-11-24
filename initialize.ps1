@@ -219,6 +219,29 @@ Log "Install Nav Container Helper from PowerShell Gallery"
 Install-Module -Name navcontainerhelper -RequiredVersion 0.2.0.1 -Force
 Import-Module -Name navcontainerhelper -DisableNameChecking
 
+
+$workshopFilesUrl = 'https://www.dropbox.com/s/4iy5jft3ucgngqa/WorkshopFiles.zip?dl=1'
+
+#1CF custom download of workshop files
+$downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
+New-Item 'c:\Demo\DownloadWorkshopFiles' -ItemType Directory -ErrorAction Ignore |Out-Null
+('function DownloadFile([string]$sourceUrl, [string]$destinationFile)
+{
+    Remove-Item -Path $destinationFile -Force -ErrorAction Ignore
+    (New-Object System.Net.WebClient).DownloadFile($sourceUrl, $destinationFile)
+}
+$workshopFilesUrl = "'+$workshopFilesUrl +'"
+$workshopFilesFolder = "c:\WorkshopFiles"
+$workshopFilesFile = "c:\demo\workshopFiles.zip"
+Remove-Item $workshopFilesFolder -Force -Recurse |Out-Null
+New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out-Null
+DownloadFile -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
+[Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
+[System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
+')| Add-Content $downloadWorkshopFilesScript |Out-Null
+
+
+
 $startupAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $setupStartScript
 $startupTrigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -TaskName "SetupStart" `
