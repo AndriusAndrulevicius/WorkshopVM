@@ -78,31 +78,23 @@ $ServersToCreate |%{
 
     Copy-Item -Path "c:\DEMO\$containerName\my\*.vsix" -Destination "c:\DEMO\" -Recurse -Force -ErrorAction Ignore
     Copy-Item -Path "C:\DEMO\RestartNST.ps1" -Destination "c:\DEMO\$containerName\my\RestartNST.ps1" -Force -ErrorAction Ignore
-}
 
+    $country = Get-NavContainerCountry -containerOrImageName $imageName
+    $navVersion = Get-NavContainerNavVersion -containerOrImageName $imageName
+    $locale = Get-LocaleFromCountry $country
+    
+    $containerFolder = "C:\Demo\Extensions\$containerName"
+    Log "Copying .vsix and Certificate to $containerFolder"
+    docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$containerFolder' -force
+    copy-item -Path 'C:\Run\*.cer' -Destination $containerFolder -force
+    copy-item -Path 'C:\Program Files\Microsoft Dynamics NAV\*\Service\CustomSettings.config' -Destination '$containerFolder' -force
+    if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
+        [System.IO.File]::WriteAllText('$containerFolder\clickonce.txt','http://${publicDnsName}:8080/NAV')
+    }"
+    [System.IO.File]::WriteAllText("$containerFolder\Version.txt",$navVersion)
+    [System.IO.File]::WriteAllText("$containerFolder\Country.txt", $country)
 
-$country = Get-NavContainerCountry -containerOrImageName $imageName
-$navVersion = Get-NavContainerNavVersion -containerOrImageName $imageName
-$locale = Get-LocaleFromCountry $country
-
-Log "Using image $imageName"
-Log "Country $country"
-Log "Version $navVersion"
-Log "Locale $locale"
-
-# Copy .vsix and Certificate to container folder
-$containerFolder = "C:\Demo\Extensions\$containerName"
-Log "Copying .vsix and Certificate to $containerFolder"
-docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$containerFolder' -force
-copy-item -Path 'C:\Run\*.cer' -Destination '$containerFolder' -force
-copy-item -Path 'C:\Program Files\Microsoft Dynamics NAV\*\Service\CustomSettings.config' -Destination '$containerFolder' -force
-if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
-    [System.IO.File]::WriteAllText('$containerFolder\clickonce.txt','http://${publicDnsName}:8080/NAV')
-}"
-[System.IO.File]::WriteAllText("$containerFolder\Version.txt",$navVersion)
-[System.IO.File]::WriteAllText("$containerFolder\Country.txt", $country)
-
-# Install Certificate on host
+    # Install Certificate on host
 $certFile = Get-Item "$containerFolder\*.cer"
 if ($certFile) {
     $certFileName = $certFile.FullName
@@ -114,6 +106,23 @@ if ($certFile) {
     $store.add($pfx) 
     $store.close()
 }
+
+}
+
+
+
+Log "Using image $imageName"
+Log "Country $country"
+Log "Version $navVersion"
+Log "Locale $locale"
+
+# Copy .vsix and Certificate to container folder
+$demoFolder= "C:\Demo\"
+$containerFolder = "C:\Demo\Extensions\$containerName"
+Log "Copying .vsix and Certificate to $demoFolder"
+docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$demoFolder' -force
+copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force
+
 
 Log -color Green "Container output"
 docker logs $containerName | % { log $_ }
