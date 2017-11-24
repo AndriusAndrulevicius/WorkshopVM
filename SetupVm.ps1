@@ -49,7 +49,7 @@ $navDockerImage.Split(',') | % {
         docker login "$registry" -u "$registryUsername" -p "$registryPassword"
     }
     Log "Pulling $_ (this might take ~30 minutes)"
-    docker pull "$_"
+ #   docker pull "$_"
 }
 
 Log "Installing Visual C++ Redist"
@@ -72,6 +72,7 @@ Start-Process $openXmlFile -argumentList "/qn /q /passive" -wait
 
 . "c:\demo\SetupNavContainer.ps1"
 . "c:\demo\SetupDesktop.ps1"
+. "c:\demo\SetupWorkshop.ps1"
 
 $finalSetupScript = (Join-Path $PSScriptRoot "FinalSetupScript.ps1")
 if (Test-Path $finalSetupScript) {

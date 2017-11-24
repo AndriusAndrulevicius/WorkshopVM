@@ -22,8 +22,7 @@ try {
     $sqlrepbuilderURL= "https://download.microsoft.com/download/2/E/1/2E1C4993-7B72-46A4-93FF-3C3DFBB2CEE0/ENU/x86/ReportBuilder3.msi"
     $sqlrepbuilderPath = "c:\download\ReportBuilder3.msi"
 
-
-    (New-Object System.Net.WebClient).DownloadFile($sqlrepbuilderURL, $sqlrepbuilderPath)
+    DownloadFile -sourceUrl $sqlrepbuilderURL -destinationFile  $sqlrepbuilderPath
     Start-Process "C:\Windows\System32\msiexec.exe" -argumentList "/i $sqlrepbuilderPath /quiet" -wait
 
     #1CF Setup GIT
