@@ -149,6 +149,7 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Componen
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}" -Name "IsInstalled" -Value 0 | Out-Null
 
 $setupDesktopScript = "c:\demo\SetupDesktop.ps1"
+$setupWorkshopScript = "c:\demo\SetupWorkshop.ps1"
 $setupStartScript = "c:\demo\SetupStart.ps1"
 $setupVmScript = "c:\demo\SetupVm.ps1"
 $setupNavContainerScript = "c:\demo\SetupNavContainer.ps1"
@@ -168,6 +169,7 @@ if ($vmAdminUsername -ne $navAdminUsername) {
 }
 
 Download-File -sourceUrl "${scriptPath}SetupDesktop.ps1"      -destinationFile $setupDesktopScript
+Download-File -sourceUrl "${scriptPath}SetupWorkshop.ps1"      -destinationFile $setupWorkshopScript
 Download-File -sourceUrl "${scriptPath}SetupNavContainer.ps1" -destinationFile $setupNavContainerScript
 Download-File -sourceUrl "${scriptPath}SetupVm.ps1"           -destinationFile $setupVmScript
 Download-File -sourceUrl "${scriptPath}SetupStart.ps1"        -destinationFile $setupStartScript
