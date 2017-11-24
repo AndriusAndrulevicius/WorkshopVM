@@ -22,6 +22,15 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet
 Log "Disabling Server Manager Open At Logon"
 New-ItemProperty -Path "HKCU:\Software\Microsoft\ServerManager" -Name "DoNotOpenServerManagerAtLogon" -PropertyType "DWORD" -Value "0x1" –Force | Out-Null
 
+#Disable default security settings in IE
+New-Item "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer"
+new-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Internet Explorer\" -Name "DisableFirstRunCustomize" -Value '00000001' -PropertyType DWORD
+
+New-Item "HKCU:\SOFTWARE\Policies\Microsoft\Internet Explorer"
+New-Item "HKCU:\SOFTWARE\Policies\Microsoft\Internet Explorer\Main"
+
+new-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Internet Explorer\Main" -Name "DisableFirstRunCustomize" -Value '00000001' -PropertyType DWORD
+
 Log "Add Import navcontainerhelper to PowerShell profile"
 $winPsFolder = Join-Path ([Environment]::GetFolderPath("MyDocuments")) "WindowsPowerShell"
 New-Item $winPsFolder -ItemType Directory -Force -ErrorAction Ignore | Out-Null
