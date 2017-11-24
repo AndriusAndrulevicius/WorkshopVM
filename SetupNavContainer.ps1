@@ -50,13 +50,14 @@ $ServersToCreate |%{
 
    $securePassword = ConvertTo-SecureString -String $adminPassword -Key $passwordKey
    $credential = New-Object System.Management.Automation.PSCredential($navAdminUsername, $securePassword)
-   $additionalParameters = @("--publish  8080:8080",
-                             "--publish  443:443", 
-                             "--publish  7046-7049:7046-7049",                              
-                             "--env bakfile=""C:\Run\my\${dbBackupFileName}""",
+   $additionalParameters = @("--env bakfile=""C:\Run\my\${dbBackupFileName}""",
                              "--env RemovePasswordKeyFile=N"                             
                              )
                              #"--env publicFileSharePort=8080",                             
+                             #--publish  8080:8080",
+                             #"--publish  443:443", 
+                             #"--publish  7046-7049:7046-7049",                              
+                             #"
    $myScripts = @()
    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
    
