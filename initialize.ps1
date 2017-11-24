@@ -173,7 +173,7 @@ Download-File -sourceUrl "${scriptPath}SetupWorkshop.ps1"      -destinationFile 
 Download-File -sourceUrl "${scriptPath}SetupNavContainer.ps1" -destinationFile $setupNavContainerScript
 Download-File -sourceUrl "${scriptPath}SetupVm.ps1"           -destinationFile $setupVmScript
 Download-File -sourceUrl "${scriptPath}SetupStart.ps1"        -destinationFile $setupStartScript
-DownloadFile -sourceUrl "${scriptPath}Servers.csv" -destinationFile C:\DEMO\Servers.csv #1CF
+DownloadFile -sourceUrl "${scriptPath}Servers.csv" -destinationFile 'C:\DEMO\Servers.csv' #1CF
 Download-File -sourceUrl "${scriptPath}Install-VS2017Community.ps1" -destinationFile "C:\DEMO\Install-VS2017Community.ps1"
 
 if ($finalSetupScriptUrl) {
