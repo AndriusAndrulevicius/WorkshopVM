@@ -121,7 +121,7 @@ $demoFolder= "C:\Demo\"
 $containerFolder = "C:\Demo\Extensions\$containerName"
 Log "Copying .vsix and Certificate to $demoFolder"
 docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$demoFolder' -force
-copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force
+copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force"
 
 
 Log -color Green "Container output"
