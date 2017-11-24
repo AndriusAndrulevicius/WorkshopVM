@@ -1,4 +1,4 @@
-﻿#. (Join-Path $PSScriptRoot "Install-VS2017Community.ps1")
+﻿. (Join-Path $PSScriptRoot "Install-VS2017Community.ps1")
 
 try {
      $Folder = "C:\DOWNLOAD\AdobeReader"
@@ -47,13 +47,13 @@ try {
     Start-Process -Wait -FilePath $p4mSavePath -ArgumentList $commandLineMergeOptions
 
 
-    #1CF install Signtool
-    $SignToolUrl = "https://download.microsoft.com/download/A/6/A/A6AC035D-DA3F-4F0C-ADA4-37C8E5D34E3D/winsdk_web.exe"
-    $signtoolPath = "C:\Download\winsdk_web.exe"
-    $commandLineSignToolOptions = '/SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS '
+    #1CF install Signtool not needed as visual studio will be installed    
+    # $SignToolUrl = "https://download.microsoft.com/download/A/6/A/A6AC035D-DA3F-4F0C-ADA4-37C8E5D34E3D/winsdk_web.exe"
+    # $signtoolPath = "C:\Download\winsdk_web.exe"
+    # $commandLineSignToolOptions = '/SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS '
     
-    Download-File -sourceUrl $SignToolUrl -destinationFile $signtoolPath
-    Start-Process -Wait -FilePath $signtoolPath -ArgumentList $commandLineSignToolOptions
+    # Download-File -sourceUrl $SignToolUrl -destinationFile $signtoolPath
+    # Start-Process -Wait -FilePath $signtoolPath -ArgumentList $commandLineSignToolOptions
     
 
 
