@@ -60,7 +60,10 @@ try {
     copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\System32\" -Force -ErrorAction SilentlyContinue
     copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\syswow64\" -Force -ErrorAction SilentlyContinue
     regsvr32 -s "C:\Windows\System32\navsip.dll" 
-    
+
+    Log "Configuring GIT login"
+    git config --global user.email "andrius.cyvas@1clickfactory.com"
+    git config --global user.name "1clickfactory-student"
     
 
 } catch {
