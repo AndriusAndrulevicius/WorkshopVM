@@ -64,7 +64,9 @@ try {
     Log "Configuring GIT login"
     git config --global user.email "andrius.cyvas@1clickfactory.com"
     git config --global user.name "1clickfactory-student"
-    
+    git config --global merge.tool p4merge
+    git config --global mergeool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'
+        
 
 } catch {
     Log -color Red -line ($Error[0].ToString() + " (" + ($Error[0].ScriptStackTrace -split '\r\n')[0] + ")")
