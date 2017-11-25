@@ -55,7 +55,13 @@ try {
     # Download-File -sourceUrl $SignToolUrl -destinationFile $signtoolPath
     # Start-Process -Wait -FilePath $signtoolPath -ArgumentList $commandLineSignToolOptions
     
-
+    Log "Updating navsip.dll for signtool"
+    docker exec -it navdemo1 powershell "copy-item -Path 'C:\Windows\System32\NavSip.dll' -Destination 'C:\demo\extensions\navdemo1\my\navsip.dll' -force"
+    copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\System32\" -Force -ErrorAction SilentlyContinue
+    copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\syswow64\" -Force -ErrorAction SilentlyContinue
+    regsvr32 -s "C:\Windows\System32\navsip.dll" 
+    
+    
 
 } catch {
     Log -color Red -line ($Error[0].ToString() + " (" + ($Error[0].ScriptStackTrace -split '\r\n')[0] + ")")
