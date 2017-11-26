@@ -225,11 +225,7 @@ $workshopFilesUrl = 'https://www.dropbox.com/s/4iy5jft3ucgngqa/WorkshopFiles.zip
 #1CF custom download of workshop files
 $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
 New-Item 'c:\Demo\DownloadWorkshopFiles' -ItemType Directory -ErrorAction Ignore |Out-Null
-('function DownloadFile([string]$sourceUrl, [string]$destinationFile)
-{
-    Remove-Item -Path $destinationFile -Force -ErrorAction Ignore
-    (New-Object System.Net.WebClient).DownloadFile($sourceUrl, $destinationFile)
-}
+('
 $workshopFilesUrl = "'+$workshopFilesUrl +'"
 $workshopFilesFolder = "c:\WorkshopFiles"
 $workshopFilesFile = "c:\demo\workshopFiles.zip"
@@ -238,6 +234,10 @@ New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out
 Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
 [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
 [System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
+git config --global user.email "andrius.cyvas@1clickfactory.com"
+git config --global user.name "1clickfactory-student"
+git config --global merge.tool p4merge
+git config --global mergeool.p4merge.path ''C:\Program Files\Perforce\p4merge.exe''
 ')| Add-Content $downloadWorkshopFilesScript |Out-Null
 
 
