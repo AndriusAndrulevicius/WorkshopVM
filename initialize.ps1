@@ -227,17 +227,17 @@ $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFi
 New-Item 'c:\Demo\DownloadWorkshopFiles' -ItemType Directory -ErrorAction Ignore |Out-Null
 ('
 $workshopFilesUrl = "'+$workshopFilesUrl +'"
-$workshopFilesFolder = "c:\WorkshopFiles"
-$workshopFilesFile = "c:\demo\workshopFiles.zip"
-Remove-Item $workshopFilesFolder -Force -Recurse |Out-Null
-New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out-Null
-Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
-[Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
-[System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
-git config --global user.email "andrius.cyvas@1clickfactory.com"
-git config --global user.name "1clickfactory-student"
-git config --global merge.tool p4merge
-git config --global mergeool.p4merge.path ''C:\Program Files\Perforce\p4merge.exe''
+$workshopFilesFolder = "c:\WorkshopFiles" 
+$workshopFilesFile = "c:\demo\workshopFiles.zip" 
+Remove-Item $workshopFilesFolder -Force -Recurse |Out-Null 
+New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out-Null 
+Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile 
+[Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null 
+[System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder) 
+git config --global user.email "andrius.cyvas@1clickfactory.com" 
+git config --global user.name "1clickfactory-student" 
+git config --global merge.tool p4merge 
+git config --global mergeool.p4merge.path ''C:\Program Files\Perforce\p4merge.exe'' 
 ')| Add-Content $downloadWorkshopFilesScript |Out-Null
 
 
