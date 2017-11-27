@@ -61,11 +61,12 @@ try {
     copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\syswow64\" -Force -ErrorAction SilentlyContinue
     regsvr32 -s "C:\Windows\System32\navsip.dll" 
 
-    Log "Configuring GIT login"
-    git config --global user.email "andrius.cyvas@1clickfactory.com"
-    git config --global user.name "1clickfactory-student"
-    git config --global merge.tool p4merge
-    git config --global mergeool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'
+    #transfered to download workshopfiles, too early to run here
+    #Log "Configuring GIT login"
+    #git config --global user.email "andrius.cyvas@1clickfactory.com"
+    #git config --global user.name "1clickfactory-student"
+    #git config --global merge.tool p4merge
+    #git config --global mergeool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'
         
 
 } catch {
