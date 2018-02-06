@@ -38,7 +38,7 @@ $ServersToCreate |%{
     
     $containerName = $_.Server
     $bakupPath = "$BackupFolder\$($_.Backup)"
-    $containerFolder = Join-Path C:\ProgramData\NavContainerHelper\Extensions\$containerName
+    $containerFolder = Join-Path "C:\ProgramData\NavContainerHelper\Extensions\" $containerName
     New-Item -Path $containerFolder -ItemType Directory -ErrorAction Ignore | Out-Null
     $myFolder = Join-Path $containerFolder "my"
     New-Item -Path $myFolder -ItemType Directory -ErrorAction Ignore | Out-Null
