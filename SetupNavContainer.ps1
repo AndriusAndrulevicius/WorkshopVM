@@ -16,13 +16,13 @@ docker ps --filter name=$containerName -a -q | % {
     docker rm $_ -f | Out-Null
 }
 
-$BackupsUrl = "https://www.dropbox.com/s/5ue798dqqgbq273/DBBackups.zip?dl=1"
+$BackupsUrl = "https://www.dropbox.com/s/ppaubskck4m1oue/DBBackups.zip?dl=1"
 $BackupFolder = "C:\DOWNLOAD\Backups"
 $Filename = "$BackupFolder\dbBackups.zip"
 New-Item $BackupFolder -itemtype directory -ErrorAction ignore | Out-Null
 if (!(Test-Path $Filename)) {
     Download-File -SourceUrl $BackupsUrl  -destinationFile $Filename
-
+}
 $inspect = docker inspect $imageName | ConvertFrom-Json
 $country = $inspect.Config.Labels.country
 $navVersion = $inspect.Config.Labels.version
@@ -99,7 +99,7 @@ $ServersToCreate |%{
     [System.IO.File]::WriteAllText("$containerFolder\Country.txt", $country)
 
     # Install Certificate on host
-
+}
 if ($nav -eq "devpreview") {
     $title = "Dynamics 365 ""Tenerife"" Preview Environment"
 } elseif ($nav -eq "main") {
