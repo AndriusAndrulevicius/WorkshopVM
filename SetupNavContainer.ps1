@@ -30,19 +30,16 @@ $nav = $inspect.Config.Labels.nav
 $cu = $inspect.Config.Labels.cu
 $locale = Get-LocaleFromCountry $country
 
--[Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
+[Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
 [System.IO.Compression.ZipFile]::ExtractToDirectory($Filename,$BackupFolder )
 
-$ServersToCreate = Import-Csv "c:\demo\servers.csv"
+$ServersToCreate = Import-Csv "c:\demo\servers.csv" 
 $ServersToCreate |%{
     
     $containerName = $_.Server
     $bakupPath = "$BackupFolder\$($_.Backup)"
     $containerFolder = Join-Path "C:\ProgramData\NavContainerHelper\Extensions\" $containerName
-    New-Item -Path $containerFolder -ItemType Directory -ErrorAction Ignore | Out-Null
-    $myFolder = Join-Path $containerFolder "my"
-    New-Item -Path $myFolder -ItemType Directory -ErrorAction Ignore | Out-Null
-
+    
     
     
    # CreateDevServerContainer -devContainerName $d -devImageName 'navdocker.azurecr.io/dynamics-nav:devpreview-september'
@@ -60,6 +57,17 @@ $ServersToCreate |%{
                              #"
    $myScripts = @()
    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
+
+   #1CF removing container if exists
+   if (Test-NavContainer -containerName $containerName) {
+    Remove-NavContainer $containerName
+    }
+
+#1CF copy backup to My folder
+   New-Item -Path $containerFolder -ItemType Directory -ErrorAction Ignore | Out-Null
+   $myFolder = Join-Path $containerFolder "my"
+   New-Item -Path $myFolder -ItemType Directory -ErrorAction Ignore | Out-Null
+
    $dbBackupFileName = Split-Path $bakupPath -Leaf
     Copy-Item -Path $bakupPath -Destination "$myFolder\" -Recurse -Force 
 
