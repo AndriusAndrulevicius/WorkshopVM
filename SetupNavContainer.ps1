@@ -43,10 +43,6 @@ $ServersToCreate |%{
     $myFolder = Join-Path $containerFolder "my"
     New-Item -Path $myFolder -ItemType Directory -ErrorAction Ignore | Out-Null
 
-    $dbBackupFileName = Split-Path $bakupPath -Leaf
-    Copy-Item -Path $bakupPath -Destination "$myFolder\" -Recurse -Force 
-
-    Start-Sleep -Seconds 10
     
     
    # CreateDevServerContainer -devContainerName $d -devImageName 'navdocker.azurecr.io/dynamics-nav:devpreview-september'
@@ -64,7 +60,11 @@ $ServersToCreate |%{
                              #"
    $myScripts = @()
    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
-   
+   $dbBackupFileName = Split-Path $bakupPath -Leaf
+    Copy-Item -Path $bakupPath -Destination "$myFolder\" -Recurse -Force 
+
+    Start-Sleep -Seconds 10
+    
    
    
    Log "Running $imageName (this will take a few minutes)"
