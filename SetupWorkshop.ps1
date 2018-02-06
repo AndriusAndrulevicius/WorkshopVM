@@ -1,18 +1,19 @@
 ﻿. (Join-Path $PSScriptRoot "Install-VS2017Community.ps1")
 
 try {
-     $Folder = "C:\DOWNLOAD\AdobeReader"
-     New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
+    $Folder = "C:\DOWNLOAD\AdobeReader"
+    $Filename = "$Folder\AdbeRdr11010_en_US.exe"
+    New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
     
-    # if (!(Test-Path $Filename)) {
-    #     Log "Downloading Adobe Reader"
-    #     $WebClient = New-Object System.Net.WebClient
-    #     $WebClient.Download-File("http://ardownload.adobe.com/pub/adobe/reader/win/11.x/11.0.10/en_US/AdbeRdr11010_en_US.exe", $Filename)
-    # }
+    #if (!(Test-Path $Filename)) {
+    #    Log "Downloading Adobe Reader"
+    #    $WebClient = New-Object System.Net.WebClient
+    #    $WebClient.DownloadFile("http://ardownload.adobe.com/pub/adobe/reader/win/11.x/11.0.10/en_US/AdbeRdr11010_en_US.exe", $Filename)
+    #}
     
-    # Log "Installing Adobe Reader (this should only take a few minutes)"
-    # Start-Process $Filename -ArgumentList "/msi /qn" -Wait -Passthru | Out-Null
-    # Start-Sleep -Seconds 10
+    #Log "Installing Adobe Reader (this should only take a few minutes)"
+    #Start-Process $Filename -ArgumentList "/msi /qn" -Wait -Passthru | Out-Null
+    #Start-Sleep -Seconds 10
 
     #1CF Setup report builder
     Log "Installing .NET"
@@ -56,19 +57,18 @@ try {
     # Start-Process -Wait -FilePath $signtoolPath -ArgumentList $commandLineSignToolOptions
     
     Log "Updating navsip.dll for signtool"
-    docker exec -it navdemo1 powershell "copy-item -Path 'C:\Windows\SysWOW64\NavSip.dll' -Destination 'C:\demo\extensions\navdemo1\my\navsip.dll' -force"
-    copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\System32\" -Force -ErrorAction SilentlyContinue
-    copy-item -Path "C:\DEMO\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\syswow64\" -Force -ErrorAction SilentlyContinue
+    docker exec -it navdemo1 powershell "copy-item -Path 'C:\Windows\SysWOW64\NavSip.dll' -Destination 'C:\Demo\extensions\navdemo1\my\navsip.dll' -force"
+    copy-item -Path "C:\Demo\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\System32\" -Force -ErrorAction SilentlyContinue
+    copy-item -Path "c:\Demo\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\syswow64\" -Force -ErrorAction SilentlyContinue
     regsvr32 -s "C:\Windows\System32\navsip.dll" 
 
-    #transfered to download workshopfiles, too early to run here
-    #Log "Configuring GIT login"
-    #git config --global user.email "andrius.cyvas@1clickfactory.com"
-    #git config --global user.name "1clickfactory-student"
-    #git config --global merge.tool p4merge
-    #git config --global mergeool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'
-        
+    Log "Configuring GIT login"
+    git config --global user.email "andrius.cyvas@1clickfactory.com"
+    git config --global user.name "1clickfactory-student"
+    git config --global merge.tool p4merge
+    git config --global mergeool.p4merge.path 'C:\Program Files\Perforce\p4merge.exe'	
 
+	
 } catch {
     Log -color Red -line ($Error[0].ToString() + " (" + ($Error[0].ScriptStackTrace -split '\r\n')[0] + ")")
 }
