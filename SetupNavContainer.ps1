@@ -40,7 +40,7 @@ $ServersToCreate |%{
     $bakupPath = "$BackupFolder\$($_.Backup)"
     $containerFolder = Join-Path "C:\ProgramData\NavContainerHelper\Extensions\" $containerName
     $dbBackupFileName = Split-Path $bakupPath -Leaf 
-    
+    $myFolder = Join-Path $containerFolder "my" 
     
    # CreateDevServerContainer -devContainerName $d -devImageName 'navdocker.azurecr.io/dynamics-nav:devpreview-september'
    # Copy-Item -Path "c:\myfolder\SetupNavUsers.ps1" -Destination "c:\DEMO\$d\my\SetupNavUsers.ps1"
@@ -57,25 +57,10 @@ $ServersToCreate |%{
                              #"
    $myScripts = @()
    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
-
-   #1CF removing container if exists
-   if (Test-NavContainer -containerName $containerName) {
-    Remove-NavContainer $containerName
-    }
-
-#1CF copy backup to My folder
-
-   New-Item -Path $containerFolder -ItemType Directory -ErrorAction Ignore | Out-Null
-   $myFolder = Join-Path $containerFolder "my"
-   New-Item -Path $myFolder -ItemType Directory -ErrorAction Ignore | Out-Null
+    $myScripts += $bakupPath;
 
    
-    Copy-Item -Path $bakupPath -Destination "$myFolder\" -Recurse -Force 
-
-    Start-Sleep -Seconds 10
     
-   
-   
    Log "Running $imageName (this will take a few minutes)"
    New-NavContainer -accept_eula `
                     -containerName $containerName `
@@ -89,74 +74,10 @@ $ServersToCreate |%{
    
    
 
-    Copy-Item -Path "c:\DEMO\$containerName\my\*.vsix" -Destination "c:\DEMO\" -Recurse -Force -ErrorAction Ignore
-    Copy-Item -Path "C:\DEMO\RestartNST.ps1" -Destination "c:\DEMO\$containerName\my\RestartNST.ps1" -Force -ErrorAction Ignore
-
     $country = Get-NavContainerCountry -containerOrImageName $imageName
     $navVersion = Get-NavContainerNavVersion -containerOrImageName $imageName
     $locale = Get-LocaleFromCountry $country
     
-    $containerFolder = "C:\Demo\Extensions\$containerName"
-    Log "Copying .vsix and Certificate to $containerFolder"
-    docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$containerFolder' -force
-    copy-item -Path 'C:\Run\*.cer' -Destination $containerFolder -force
-    copy-item -Path 'C:\Program Files\Microsoft Dynamics NAV\*\Service\CustomSettings.config' -Destination '$containerFolder' -force
-    if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
-        [System.IO.File]::WriteAllText('$containerFolder\clickonce.txt','http://${publicDnsName}:8080/NAV')
-    }"
-    [System.IO.File]::WriteAllText("$containerFolder\Version.txt",$navVersion)
-    [System.IO.File]::WriteAllText("$containerFolder\Country.txt", $country)
-
-    # Install Certificate on host
-}
-if ($nav -eq "devpreview") {
-    $title = "Dynamics 365 ""Tenerife"" Preview Environment"
-} elseif ($nav -eq "main") {
-    $title = "Dynamics 365 ""Tenerife"" Preview Environment"
-} else {
-    $title = "Dynamics NAV $nav Demonstration Environment"
-}
-
-Log "Using image $imageName"
-Log "Country $country"
-Log "Version $navVersion"
-Log "Locale $locale"
-
-$securePassword = ConvertTo-SecureString -String $adminPassword -Key $passwordKey
-$credential = New-Object System.Management.Automation.PSCredential($navAdminUsername, $securePassword)
-$additionalParameters = @("--publish  8080:8080",
-                          "--publish  443:443", 
-                          "--publish  7046-7049:7046-7049", 
-                          "--env publicFileSharePort=8080",
-                          "--env PublicDnsName=$publicdnsName",
-                          "--env RemovePasswordKeyFile=N"
-                          )
-if ("$appBacpacUri" -ne "" -and "$tenantBacpacUri" -ne "") {
-    $additionalParameters += @("--env appbacpac=$appBacpacUri",
-                               "--env tenantbacpac=$tenantBacpacUri")
-}
-
-$mt = $false
-if ($multitenant -eq "Yes") {
-    $mt = $true
-}
-
-$myScripts = @()
-Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
-
-Log "Running $imageName (this will take a few minutes)"
-New-NavContainer -accept_eula `
-                 -containerName $containerName `
-                 -useSSL `
-                 -auth NavUserPassword `
-                 -includeCSide `
-                 -doNotExportObjectsToText `
-                 -credential $credential `
-                 -additionalParameters $additionalParameters `
-                 -myScripts $myscripts `
-                 -imageName $imageName `
-                 -multitenant:$mt
-
 if (Test-Path "c:\demo\objects.fob" -PathType Leaf) {
     Log "Importing c:\demo\objects.fob to container"
     $sqlCredential = New-Object System.Management.Automation.PSCredential ( "sa", $credential.Password )
@@ -164,7 +85,7 @@ if (Test-Path "c:\demo\objects.fob" -PathType Leaf) {
 }
 
 # Copy .vsix and Certificate to container folder
-$containerFolder = "C:\Demo\Extensions\$containerName"
+$containerFolder = "C:\ProgramData\NavContainerHelper\Extensions\$containerName"
 Log "Copying .vsix and Certificate to $containerFolder"
 docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$containerFolder' -force
 copy-item -Path 'C:\Run\*.cer' -Destination '$containerFolder' -force
@@ -176,6 +97,10 @@ if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
 [System.IO.File]::WriteAllText("$containerFolder\Cu.txt",$cu)
 [System.IO.File]::WriteAllText("$containerFolder\Country.txt", $country)
 [System.IO.File]::WriteAllText("$containerFolder\Title.txt",$title)
+
+Copy-Item -Path "$myFolder\*.vsix" -Destination "c:\DEMO\" -Recurse -Force -ErrorAction Ignore
+Copy-Item -Path "C:\DEMO\RestartNST.ps1" -Destination "$myFolder\RestartNST.ps1" -Force -ErrorAction Ignore
+
 
 # Install Certificate on host
 $certFile = Get-Item "$containerFolder\*.cer"
@@ -195,14 +120,15 @@ docker logs $containerName | % { log $_ }
 
 Log -color Green "Container setup complete!"
 
--Log "Using image $imageName"
+Log "Using image $imageName"
 Log "Country $country"
 Log "Version $navVersion"
 Log "Locale $locale"
 
 # Copy .vsix and Certificate to container folder
 $demoFolder= "C:\Demo\"
-$containerFolder = "C:\Demo\Extensions\$containerName"
+$containerFolder = "C:\ProgramData\NavContainerHelper\Extensions\$containerName"
 Log "Copying .vsix and Certificate to $demoFolder"
 docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$demoFolder' -force
 copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force"
+}
