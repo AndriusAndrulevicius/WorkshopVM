@@ -63,7 +63,8 @@ try {
     regsvr32 -s "C:\Windows\System32\navsip.dll" 
 
     Log "Configuring GIT login"
-#    refreshenv 
+
+    $env:Path += ";<C:\Program Files\Git\bin>"  #for git command to be recognized
     git config --global user.email "andrius.cyvas@1clickfactory.com"
     git config --global user.name "1clickfactory-student"
     git config --global merge.tool p4merge
