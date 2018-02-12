@@ -64,7 +64,7 @@ try {
 
     Log "Configuring GIT login"
 
-    $env:Path += ";<C:\Program Files\Git\bin>"  #for git command to be recognized
+    $ENV:PATH=”$ENV:PATH;C:\Program Files\Git\bin”  #for git command to be recognized
     git config --global user.email "andrius.cyvas@1clickfactory.com"
     git config --global user.name "1clickfactory-student"
     git config --global merge.tool p4merge
