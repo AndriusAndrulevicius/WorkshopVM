@@ -28,7 +28,7 @@ try {
 
     #1CF Setup GIT
     Log "Installing GIT"
-    $gitUrl = "https://www.dropbox.com/s/ppaubskck4m1oue/DBBackups.zip?dl=1"
+    $gitUrl = "https://www.dropbox.com/s/t0ajl5m7hs07r0y/git.exe?dl=1"
     $gitSavePath = "C:\Download\git.exe"
 
     Download-File -sourceUrl $gitUrl -destinationFile $gitSavePath
@@ -63,7 +63,7 @@ try {
     regsvr32 -s "C:\Windows\System32\navsip.dll" 
 
     Log "Configuring GIT login"
-    refreshenv 
+#    refreshenv 
     git config --global user.email "andrius.cyvas@1clickfactory.com"
     git config --global user.name "1clickfactory-student"
     git config --global merge.tool p4merge
