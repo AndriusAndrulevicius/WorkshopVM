@@ -58,8 +58,7 @@ $ServersToCreate |%{
    $myScripts = @()
    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
     $myScripts += $bakupPath;
-
-   
+    $myScripts += 'C:\DEMO\RestartNST.ps1';  
     
    Log "Running $imageName (this will take a few minutes)"
    New-NavContainer -accept_eula `
@@ -99,7 +98,7 @@ if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
 [System.IO.File]::WriteAllText("$containerFolder\Title.txt",$title)
 
 Copy-Item -Path "$myFolder\*.vsix" -Destination "c:\DEMO\" -Recurse -Force -ErrorAction Ignore
-Copy-Item -Path "C:\DEMO\RestartNST.ps1" -Destination "$myFolder\RestartNST.ps1" -Force -ErrorAction Ignore
+
 
 
 # Install Certificate on host

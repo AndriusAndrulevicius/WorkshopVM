@@ -168,6 +168,8 @@ Download-File -sourceUrl "${scriptPath}SetupVm.ps1"           -destinationFile $
 Download-File -sourceUrl "${scriptPath}SetupStart.ps1"        -destinationFile $setupStartScript
 Download-File -sourceUrl "${scriptPath}Servers.csv" -destinationFile 'C:\DEMO\Servers.csv' #1CF
 Download-File -sourceUrl "${scriptPath}Install-VS2017Community.ps1" -destinationFile "C:\DEMO\Install-VS2017Community.ps1"
+Download-File -sourceUrl "${scriptPath}RestartNST.ps1" -destinationFile "C:\DEMO\RestartNST.ps1"
+
 
 if ($finalSetupScriptUrl) {
     $finalSetupScript = "c:\demo\FinalSetupScript.ps1"
