@@ -84,7 +84,8 @@ if (Test-Path "c:\demo\objects.fob" -PathType Leaf) {
 }
 
 # Copy .vsix and Certificate to container folder
-$containerFolder = "C:\ProgramData\NavContainerHelper\Extensions\$containerName"
+#$containerFolder = "C:\ProgramData\NavContainerHelper\Extensions\$containerName"
+$containerFolder = $myfolder
 Log "Copying .vsix and Certificate to $containerFolder"
 docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$containerFolder' -force
 copy-item -Path 'C:\Run\*.cer' -Destination '$containerFolder' -force
@@ -126,7 +127,6 @@ Log "Locale $locale"
 
 # Copy .vsix and Certificate to container folder
 $demoFolder= "C:\Demo\"
-$containerFolder = "C:\ProgramData\NavContainerHelper\Extensions\$containerName"
 Log "Copying .vsix and Certificate to $demoFolder"
 docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$demoFolder' -force
 copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force"

@@ -28,7 +28,7 @@ try {
 
     #1CF Setup GIT
     Log "Installing GIT"
-    $gitUrl = "https://www.dropbox.com/s/xezrif8i2210dx3/Git-2.15.0-64-bit.exe?dl=1"
+    $gitUrl = "https://www.dropbox.com/s/ppaubskck4m1oue/DBBackups.zip?dl=1"
     $gitSavePath = "C:\Download\git.exe"
 
     Download-File -sourceUrl $gitUrl -destinationFile $gitSavePath
@@ -39,7 +39,7 @@ try {
     #1CF Setup P4Merge
 
     Log "Installing P4Merge"
-    $p4mUrl = "https://www.dropbox.com/s/yvb0xxcitew43eh/p4vinst.exe?dl=1"
+    $p4mUrl = "https://www.dropbox.com/s/xnmcp9ztfqv0dyy/p4vinst.exe?dl=1"
     $p4mSavePath = "C:\Download\p4m.exe"
 
     Download-File -sourceUrl $p4mUrl -destinationFile $p4mSavePath
@@ -63,6 +63,7 @@ try {
     regsvr32 -s "C:\Windows\System32\navsip.dll" 
 
     Log "Configuring GIT login"
+    refreshenv 
     git config --global user.email "andrius.cyvas@1clickfactory.com"
     git config --global user.name "1clickfactory-student"
     git config --global merge.tool p4merge
