@@ -56,7 +56,7 @@
         },
         "navDockerImage": {
             "type": "string",
-            "defaultValue": "microsoft/dynamics-nav:devpreview-finus",
+            "defaultValue": "microsoft/dynamics-nav:devpreview-february-finus",
             "metadata": {
                 "Description": "Select the NAV Docker Image to deploy. See https://hub.docker.com/r/microsoft/dynamics-nav/ for a list of public images."
             }
