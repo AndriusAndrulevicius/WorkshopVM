@@ -69,8 +69,9 @@ $ServersToCreate |%{
                     -credential $credential `
                     -additionalParameters $additionalParameters `
                     -myScripts $myscripts `
+                    -licenseFile:= 'c:\demo\license.flf' `
                     -imageName $imageName
-   
+                       
    
 
     $country = Get-NavContainerCountry -containerOrImageName $imageName
