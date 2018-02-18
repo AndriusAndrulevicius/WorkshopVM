@@ -20,7 +20,11 @@ try {
     Install-WindowsFeature Net-Framework-Core 
 
     Log "Installing SQL Report Builder"
-    $sqlrepbuilderURL= "https://download.microsoft.com/download/2/E/1/2E1C4993-7B72-46A4-93FF-3C3DFBB2CEE0/ENU/x86/ReportBuilder3.msi"
+    #SQL 2014 
+    #$sqlrepbuilderURL= "https://download.microsoft.com/download/2/E/1/2E1C4993-7B72-46A4-93FF-3C3DFBB2CEE0/ENU/x86/ReportBuilder3.msi"
+    #SQL 2016
+    $sqlrepbuilderURL= "https://www.dropbox.com/s/qfjdpe9nb2xsnd5/ReportBuilder3.msi?dl=1"
+    
     $sqlrepbuilderPath = "c:\download\ReportBuilder3.msi"
 
     Download-File -sourceUrl $sqlrepbuilderURL -destinationFile  $sqlrepbuilderPath
