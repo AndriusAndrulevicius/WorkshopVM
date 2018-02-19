@@ -59,7 +59,7 @@ $ServersToCreate |%{
    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
     $myScripts += $bakupPath;
     $myScripts += 'C:\DEMO\RestartNST.ps1';  
-    
+    $myScripts += 'C:\DEMO\license.flf';
    Log "Running $imageName (this will take a few minutes)"
    New-NavContainer -accept_eula `
                     -containerName $containerName `
@@ -69,7 +69,7 @@ $ServersToCreate |%{
                     -credential $credential `
                     -additionalParameters $additionalParameters `
                     -myScripts $myscripts `
-                    -licenseFile:= 'c:\demo\license.flf' `
+                    -licenseFile:= 'c:\run\my\license.flf' `
                     -imageName $imageName
                        
    
