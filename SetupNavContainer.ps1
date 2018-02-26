@@ -132,3 +132,22 @@ Log "Copying .vsix and Certificate to $demoFolder"
 docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$demoFolder' -force
 copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force"
 }
+
+$img3 = 'microsoft/dynamics-nav:devpreview-february-finus'
+Log "Pulling image $img3"
+docker pull $img3
+
+$containerName= 'navdemo3'
+ $additionalParameters = @("--env RemovePasswordKeyFile=N")
+  
+ Log "Running $containerName (this will take a few minutes)"
+   New-NavContainer -accept_eula `
+                    -containerName $containerName `
+                    -auth Windows `
+                    -includeCSide `
+                    -doNotExportObjectsToText `
+                    -credential $credential `
+                    -additionalParameters $additionalParameters `                    
+                    -licenseFile 'c:\demo\license.flf' `
+                    -imageName $imageName
+                    
