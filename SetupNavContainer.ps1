@@ -149,5 +149,5 @@ $containerName= 'navdemo3'
                     -credential $credential `
                     -additionalParameters $additionalParameters `                    
                     -licenseFile 'c:\demo\license.flf' `
-                    -imageName $imageName
+                    -imageName $img3
                     
