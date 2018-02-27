@@ -147,7 +147,7 @@ $containerName= 'navdemo3'
                     -includeCSide `
                     -doNotExportObjectsToText `
                     -credential $credential `
-                    -additionalParameters $additionalParameters `                    
+                    -additionalParameters $additionalParameters `
                     -licenseFile 'c:\demo\license.flf' `
                     -imageName $img3
                     
