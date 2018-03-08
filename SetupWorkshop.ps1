@@ -51,6 +51,14 @@ try {
     $commandLineMergeOptions = '/S /V"/qn ALLUSERS=1 REBOOT=ReallySuppress"'
     Start-Process -Wait -FilePath $p4mSavePath -ArgumentList $commandLineMergeOptions
 
+    #1CF Setup Chrome
+    Log "Installing Chrome"
+    $chromeUrl = "https://www.dropbox.com/s/kiqfzeh9j1n9czb/ChromeSetup.exe?dl=1"
+    $chromeSavePath = "C:\Download\chrome.exe"
+
+    Download-File -sourceUrl $chromeUrl -destinationFile $chromeSavePath
+    Start-Process -FilePath $chromeSavePath -Args "/silent /install" -Verb RunAs -Wait
+    Log "Chrome Installed"
 
     #1CF install Signtool not needed as visual studio will be installed    
     # $SignToolUrl = "https://download.microsoft.com/download/A/6/A/A6AC035D-DA3F-4F0C-ADA4-37C8E5D34E3D/winsdk_web.exe"
