@@ -7,7 +7,7 @@ param
        [string]$vmAdminUsername        = "vmadmin",
        [string]$navAdminUsername       = "admin",
        [string]$adminPassword          = "P@ssword1",
-       [string]$navDockerImage         = "microsoft/dynamics-nav:devpreview-february-finus",
+       [string]$navDockerImage         = "microsoft/dynamics-nav:devpreview-finus",
        [string]$registryUsername       = "",
        [string]$registryPassword       = "",
        [string]$appBacpacUri           = "",
