@@ -133,7 +133,7 @@ docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Dest
 copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force"
 }
 
-$img3 = 'microsoft/dynamics-nav:devpreview-finus'
+$img3 = 'microsoft/bcsandbox'
 Log "Pulling image $img3"
 docker pull $img3
 
