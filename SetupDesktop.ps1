@@ -30,6 +30,7 @@ if ($firsttime) {
     Log "Installing Visual Studio Code (this might take a few minutes)"
     $setupParameters = “/VerySilent /CloseApplications /NoCancel /LoadInf=""c:\demo\vscode.inf"" /MERGETASKS=!runcode"
     Start-Process -FilePath $Filename -WorkingDirectory $Folder -ArgumentList $setupParameters -Wait -Passthru | Out-Null
+    code --install-extension ms-vsts.team
 
     Log "Downloading samples"
     $Folder = "C:\DOWNLOAD"
