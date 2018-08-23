@@ -60,10 +60,6 @@ try {
     Start-Process -FilePath $chromeSavePath -Args "/silent /install" -Verb RunAs -Wait
     Log "Chrome Installed"
 
-    #1CF VSTS Extension
-    Log "Installing VSTS Extension"
-    code --install-extension ms-vsts.team
-
     #1CF install Signtool not needed as visual studio will be installed    
     # $SignToolUrl = "https://download.microsoft.com/download/A/6/A/A6AC035D-DA3F-4F0C-ADA4-37C8E5D34E3D/winsdk_web.exe"
     # $signtoolPath = "C:\Download\winsdk_web.exe"

@@ -79,3 +79,7 @@ New-DesktopShortcut -Name "Nav Container Helper" -TargetPath "powershell.exe" -A
 New-DesktopShortcut -Name "Workshop Files" -TargetPath "C:\WorkshopFiles\" #1CF
 
 Log -color Green "Desktop setup complete!"
+
+#1CF VSTS Extension
+Log "Installing VSTS Extension"
+code --install-extension ms-vsts.team
