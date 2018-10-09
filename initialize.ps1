@@ -218,7 +218,7 @@ if ($dnsidentity.StartsWith("*")) {
 ') | Add-Content "c:\myfolder\SetupCertificate.ps1"
 }
 
-$workshopFilesUrl = 'https://www.dropbox.com/s/t32d6zv601y6acs/Workshopfiles.zip?dl=1'
+$workshopFilesUrl = 'https://www.dropbox.com/s/pk5ej2sf50zghap/Workshopfiles.zip?dl=1'
 
 #1CF custom download of workshop files
 $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
