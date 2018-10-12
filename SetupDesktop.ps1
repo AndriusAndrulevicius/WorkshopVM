@@ -22,8 +22,8 @@ if ($firsttime) {
 
     New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
     if (!(Test-Path $Filename)) {
-        $sourceUrl = "https://go.microsoft.com/fwlink/?Linkid=852157"
-
+        #$sourceUrl = "https://go.microsoft.com/fwlink/?Linkid=852157"
+        $sourceUrl = "https://www.dropbox.com/s/xoaxk41u3mh73s3/VSCodeSetup-stable.exe?dl=1"
         Download-File -SourceUrl $sourceUrl -destinationFile $Filename
     }
     
