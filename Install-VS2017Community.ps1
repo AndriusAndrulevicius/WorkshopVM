@@ -19,5 +19,6 @@ Log "Installing Visual Studio 2017 Community (this might take a while)"
 $setupParameters = “--quiet --norestart"
 Start-Process -FilePath $Filename -WorkingDirectory $Folder -ArgumentList $setupParameters -Wait -Passthru | Out-Null
 
-$setupParameters = “--quiet --norestart --add Microsoft.VisualStudio.Component.Windows10SDK.14393"
+#$setupParameters = “--quiet --norestart --add Microsoft.VisualStudio.Component.Windows10SDK.14393"
+$setupParameters = “--quiet --norestart --add Microsoft.Component.ClickOnce.MSBuild"
 Start-Process -FilePath $Filename -WorkingDirectory $Folder -ArgumentList $setupParameters -Wait -Passthru | Out-Null
