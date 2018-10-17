@@ -74,7 +74,7 @@ Start-Process $openXmlFile -argumentList "/qn /q /passive" -wait
 . "c:\demo\SetupDesktop.ps1"
 . "c:\demo\SetupWorkshop.ps1"
 
-docker pull microsoft/dynamics-nav:devpreview
+#docker pull microsoft/dynamics-nav:devpreview
 
 $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
 $logonAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $downloadWorkshopFilesScript
