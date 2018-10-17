@@ -11,8 +11,8 @@ Import-Module -name navcontainerhelper -DisableNameChecking
 
 Log -color Green "Setting up Desktop Experience"
 
-$codeCmd = "C:\Program Files\Microsoft VS Code\bin\Code.cmd"
-$codeExe = "C:\Program Files\Microsoft VS Code\Code.exe"
+$codeCmd = "$([Environment]::GetFolderPath('LocalApplicationData'))\Programs\Microsoft VS Code\bin\Code.cmd"
+$codeExe = "$([Environment]::GetFolderPath('LocalApplicationData'))\Programs\Microsoft VS Code\Code.exe"
 $firsttime = (!(Test-Path $codeExe))
 $disableVsCodeUpdate = $false
 
@@ -42,7 +42,9 @@ if ($firsttime) {
     
     $alFolder = "$([Environment]::GetFolderPath("MyDocuments"))\AL"
     Remove-Item -Path "$alFolder\Samples" -Recurse -Force -ErrorAction Ignore | Out-Null
+    Remove-Item -Path "$alFolder\snippets" -Recurse -Force -ErrorAction Ignore | Out-Null
     New-Item -Path "$alFolder\Samples" -ItemType Directory -Force -ErrorAction Ignore | Out-Null
+    New-Item -Path "$alFolder\snippets" -ItemType Directory -Force -ErrorAction Ignore | Out-Null
     Copy-Item -Path "$folder\AL-master\samples\*" -Destination "$alFolder\samples" -Recurse -ErrorAction Ignore
     Copy-Item -Path "$folder\AL-master\snippets\*" -Destination "$alFolder\snippets" -Recurse -ErrorAction Ignore
 }
