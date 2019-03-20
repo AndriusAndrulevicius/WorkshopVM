@@ -70,6 +70,7 @@ $ServersToCreate |%{
                     -additionalParameters $additionalParameters `
                     -myScripts $myscripts `
                     -licenseFile 'c:\demo\license.flf' `
+                    -accept_outdated `
                     -imageName $imageName
                        
    
@@ -149,5 +150,6 @@ $containerName= 'navdemo3'
                     -credential $credential `
                     -additionalParameters $additionalParameters `
                     -licenseFile 'c:\demo\license.flf' `
+                    -accept_outdated `
                     -imageName $img3
                     
