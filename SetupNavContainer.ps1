@@ -72,6 +72,7 @@ $ServersToCreate |%{
                     -licenseFile 'c:\demo\license.flf' `
                     -accept_outdated `
                     -imageName $imageName
+                    -additionalParameters @("--env CustomNavSettings=EnableThreadThrottling=False,EnablePrioritizedThreadThrottling=False")
                        
    
 
@@ -152,4 +153,5 @@ $containerName= 'navdemo3'
                     -licenseFile 'c:\demo\license.flf' `
                     -accept_outdated `
                     -imageName $img3
+                    -additionalParameters @("--env CustomNavSettings=EnableThreadThrottling=False,EnablePrioritizedThreadThrottling=False")
                     
