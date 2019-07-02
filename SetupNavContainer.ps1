@@ -48,7 +48,8 @@ $ServersToCreate |%{
    $securePassword = ConvertTo-SecureString -String $adminPassword -Key $passwordKey
    $credential = New-Object System.Management.Automation.PSCredential($navAdminUsername, $securePassword)
    $additionalParameters = @("--env bakfile=""C:\Run\my\${dbBackupFileName}""",
-                             "--env RemovePasswordKeyFile=N"                             
+                             "--env RemovePasswordKeyFile=N",
+                             "--env CustomNavSettings=EnableThreadThrottling=False,EnablePrioritizedThreadThrottling=False"
                              )
                              #"--env publicFileSharePort=8080",                             
                              #--publish  8080:8080",
@@ -71,9 +72,7 @@ $ServersToCreate |%{
                     -myScripts $myscripts `
                     -licenseFile 'c:\demo\license.flf' `
                     -accept_outdated `
-                    -imageName $imageName
-                    -additionalParameters @("--env CustomNavSettings=EnableThreadThrottling=False,EnablePrioritizedThreadThrottling=False")
-                       
+                    -imageName $imageName                     
    
 
     $country = Get-NavContainerCountry -containerOrImageName $imageName
@@ -140,7 +139,9 @@ Log "Pulling image $img3"
 docker pull $img3
 
 $containerName= 'navdemo3'
- $additionalParameters = @("--env RemovePasswordKeyFile=N")
+ $additionalParameters = @("--env RemovePasswordKeyFile=N",
+                           "--env CustomNavSettings=EnableThreadThrottling=False,EnablePrioritizedThreadThrottling=False"
+                           )
   
  Log "Running $containerName (this will take a few minutes)"
    New-NavContainer -accept_eula `
@@ -153,5 +154,4 @@ $containerName= 'navdemo3'
                     -licenseFile 'c:\demo\license.flf' `
                     -accept_outdated `
                     -imageName $img3
-                    -additionalParameters @("--env CustomNavSettings=EnableThreadThrottling=False,EnablePrioritizedThreadThrottling=False")
                     
