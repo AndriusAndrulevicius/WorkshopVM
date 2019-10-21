@@ -23,7 +23,7 @@ try {
     #SQL 2014 
     #$sqlrepbuilderURL= "https://download.microsoft.com/download/2/E/1/2E1C4993-7B72-46A4-93FF-3C3DFBB2CEE0/ENU/x86/ReportBuilder3.msi"
     #SQL 2016
-    $sqlrepbuilderURL= "https://www.dropbox.com/s/qfjdpe9nb2xsnd5/ReportBuilder3.msi?dl=1"
+    $sqlrepbuilderURL = "https://www.dropbox.com/s/qfjdpe9nb2xsnd5/ReportBuilder3.msi?dl=1"
     
     $sqlrepbuilderPath = "c:\download\ReportBuilder3.msi"
 
@@ -76,12 +76,14 @@ try {
 
     Log "Configuring GIT login"
 
-    $ENV:PATH=”$ENV:PATH;C:\Program Files\Git\bin”  #for git command to be recognized
-    git config --global user.email "stdextv2@gmail.com"
-    git config --global user.name "1clickfactory-student"
+    $ENV:PATH = ”$ENV:PATH;C:\Program Files\Git\bin”  #for git command to be recognized
+    git config --global user.email "extensionsv2training@gmail.com"
+    git config --global user.name "ExtensionsV2Training"
     git config --global merge.tool p4merge
     git config --global mergeool.p4merge.path 'C:\Program Files (x86)\Perforce\p4merge.exe'	
-	
-} catch {
+    git config --global mergetool.keepBackup false
+    git config --global mergetool.trustExitCode false	
+}
+catch {
     Log -color Red -line ($Error[0].ToString() + " (" + ($Error[0].ScriptStackTrace -split '\r\n')[0] + ")")
 }
